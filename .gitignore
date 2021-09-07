@@ -3,6 +3,7 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 /node_learn/simple_http/node_modules
+/node_learn/simple_http/Images/youandme.png
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
