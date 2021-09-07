@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class SimpleGet : MonoBehaviour
 {
     public Button btnGet;
+    public Text text;
 
     private readonly string url = "http://localhost:52000";
 
@@ -24,7 +26,39 @@ public class SimpleGet : MonoBehaviour
         if(req.result == UnityWebRequest.Result.Success)
         {
             string data = req.downloadHandler.text;
-            print(data);
+            GgmVO vo = JsonUtility.FromJson<GgmVO>(data);
+
+            string s = "";
+
+            s += vo.name + " " + vo.openYear + " ";
+            foreach (var item in vo.circle)
+            {
+                s += item.name + " " + item.id + " ";
+            }
+
+
+            foreach (var item in vo.grade)
+            {
+                print("vo.grade");
+                
+                //list.Add(item.grade);
+                foreach (var item2 in item.grade)
+                {
+                    print("item.grade");
+                    print(item2.name + item2.grade + item2.cid);
+                    s += item2.name + " " + item2.grade + " " + item2.cid;
+                }
+
+
+            }
+
+
+
+            foreach (var item in vo.teacherList)
+            {
+                s += item + " ";
+            }
+            text.text = s;
         }
         else
         {
