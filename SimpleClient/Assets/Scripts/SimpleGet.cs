@@ -20,5 +20,15 @@ public class SimpleGet : MonoBehaviour
         UnityWebRequest req = UnityWebRequest.Get(url);
 
         yield return req.SendWebRequest();
+
+        if(req.result == UnityWebRequest.Result.Success)
+        {
+            string data = req.downloadHandler.text;
+            print(data);
+        }
+        else
+        {
+            Debug.LogError("데이터 통신중 오류 발생");
+        }
     }
 }
