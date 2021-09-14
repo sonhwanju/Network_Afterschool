@@ -28,6 +28,12 @@ app.get("/fileList", async (req, res) => {
     const files = await fs.readdir(path.join(__dirname,"images"));
     res.json({msg:"load success", list:files});
 });
+app.get("/thumb", async (req,res) =>{
+    let filename = req.query.file;
+    let filePath = path.join(__dirname, "thumbnails", filename);
+
+    res.sendFile(filePath);
+});
 
 server.listen(54000, () => {
     console.log("서버가 54000번 포트에서 구동중입니다");
