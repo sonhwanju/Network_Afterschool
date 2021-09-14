@@ -14,8 +14,8 @@ const server = http.createServer(function(req,res) {
             res.writeHead(200, {"Content-Type":"application/json"});
             //res.end(JSON.stringify({msg:"Hello web server", name:"ㅈ승환",hobbies:[{name:"게임",id:1},{name:"프로그래밍",id:2},{name:"잠",id:3}]}));
             res.end(JSON.stringify(result));
-            console.log(result);
-            console.log(JSON.stringify(result));
+            //console.log(result);
+            //console.log(JSON.stringify(result));
             break;
         case "/image":
             //__dirname 은 현재 폴더를 나타내는 상수

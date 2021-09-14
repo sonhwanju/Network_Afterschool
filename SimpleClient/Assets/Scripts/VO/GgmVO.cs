@@ -8,6 +8,6 @@ public class GgmVO
     public string name;
     public int openYear;
     public List<CircleVO> circle;
-    public List<CircleGrade2VO> grade = new List<CircleGrade2VO>();
+    public List<CircleGradeVO> grade = new List<CircleGradeVO>();
     public List<string> teacherList;
 }

@@ -11,8 +11,8 @@ public class SimpleImageGet : MonoBehaviour
     public Button btnImageGet2;
     public Image loadedImage;
 
-    private readonly string url = "http://localhost:52000/image";
-    private readonly string url2 = "http://localhost:52000/image2";
+    private readonly string url = "http://localhost:54000/image";
+    private readonly string url2 = "http://localhost:54000/image2";
 
     private void Start()
     {

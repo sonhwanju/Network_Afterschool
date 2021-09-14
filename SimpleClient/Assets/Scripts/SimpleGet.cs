@@ -10,7 +10,7 @@ public class SimpleGet : MonoBehaviour
     public Button btnGet;
     public Text text;
 
-    private readonly string url = "http://localhost:52000";
+    private readonly string url = "http://localhost:54000";
 
     private void Start()
     {
@@ -26,39 +26,33 @@ public class SimpleGet : MonoBehaviour
         if(req.result == UnityWebRequest.Result.Success)
         {
             string data = req.downloadHandler.text;
-            GgmVO vo = JsonUtility.FromJson<GgmVO>(data);
+            print(data);
+            //GgmVO vo = JsonUtility.FromJson<GgmVO>(data);
 
-            string s = "";
+            //string s = "";
 
-            s += vo.name + " " + vo.openYear + " ";
-            foreach (var item in vo.circle)
-            {
-                s += item.name + " " + item.id + " ";
-            }
+            //s += vo.name + " " + vo.openYear + " ";
+            //foreach (var item in vo.circle)
+            //{
+            //    s += item.name + " " + item.id + " ";
+            //}
 
 
-            foreach (var item in vo.grade)
-            {
-                print("vo.grade");
+            //foreach (var item in vo.grade)
+            //{
                 
-                //list.Add(item.grade);
-                foreach (var item2 in item.grade)
-                {
-                    print("item.grade");
-                    print(item2.name + item2.grade + item2.cid);
-                    s += item2.name + " " + item2.grade + " " + item2.cid;
-                }
+            //    print(item.name + item.grade + item.cid);
+            //    s += item.name + " " + item.grade + " " +item.cid;
 
-
-            }
+            //}
 
 
 
-            foreach (var item in vo.teacherList)
-            {
-                s += item + " ";
-            }
-            text.text = s;
+            //foreach (var item in vo.teacherList)
+            //{
+            //    s += item + " ";
+            //}
+            //text.text = s;
         }
         else
         {
