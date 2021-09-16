@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class LoadImageList : MonoBehaviour
 {
     public Button loadBtn;
     public Transform listContent;
     public GameObject listUIPrefab;
-    public Image loadedImage;
+    public Image imageField;
 
     private readonly string url = "http://localhost:54000/fileList";
 
@@ -45,20 +46,28 @@ public class LoadImageList : MonoBehaviour
             foreach (var item in vo.list)
             {
                 GameObject obj = Instantiate(listUIPrefab, listContent);
-                obj.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    loadedImage.sprite = obj.GetComponentsInChildren<Image>()[1].sprite;
-                });
                 ListItem li = obj.GetComponent<ListItem>();
 
-                StartCoroutine(LoadThumbnail(li, item));
+                LoadThumbnail(li, item);
             }
         }
     }
 
-    IEnumerator LoadThumbnail(ListItem li, string filename)
+    public void LoadThumbnail(ListItem li, string filename)
     {
-        UnityWebRequest req = UnityWebRequestTexture.GetTexture($"http://localhost:54000/thumb?file=r_{filename}");
+        string url = $"http://localhost:54000/thumb?file=r_{filename}";
+        StartCoroutine(GetImageFromServer(url, s => li.SetData(filename, s)));
+
+        li.btnLoad.onClick.AddListener(() =>
+        {
+            string origin = $"http://localhost:54000/image?file={filename}";
+            StartCoroutine(GetImageFromServer(origin, s => imageField.sprite = s));
+
+        });
+    }
+    IEnumerator GetImageFromServer(string url, Action<Sprite> handler)
+    {
+        UnityWebRequest req = UnityWebRequestTexture.GetTexture(url);
 
         yield return req.SendWebRequest();
 
@@ -69,11 +78,8 @@ public class LoadImageList : MonoBehaviour
             Rect rect = new Rect(0, 0, t.width, t.height);
             Sprite s = Sprite.Create(t, rect, new Vector2(0.5f, 0.5f));
 
-            li.SetData(filename, s);
-
+            handler(s);
         }
-        
     }
 
-    
 }

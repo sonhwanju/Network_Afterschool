@@ -16,7 +16,8 @@ app.get("/hello", (req,res) => {
     res.json({msg:"헬로페이지입니다."});
 });
 app.get("/image", (req,res) => {
-    let filePath = path.join(__dirname,"Images","youandme.png");
+    let filename = req.query.file;
+    let filePath = path.join(__dirname,"images",filename);
     res.sendFile(filePath);
 });
 

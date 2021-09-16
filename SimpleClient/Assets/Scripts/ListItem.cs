@@ -8,6 +8,8 @@ public class ListItem : MonoBehaviour
     public Image image;
     public Text txtName;
 
+    public Button btnLoad;
+
     public void SetData(string filename,Sprite sprite)
     {
         txtName.text = filename;

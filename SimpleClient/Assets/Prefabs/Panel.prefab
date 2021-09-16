@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 6994280736334579496}
   txtName: {fileID: 1370490559208604524}
+  btnLoad: {fileID: 7841165427514971313}
 --- !u!114 &7841165427514971313
 MonoBehaviour:
   m_ObjectHideFlags: 0
