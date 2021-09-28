@@ -2,8 +2,12 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const fs = require('fs/promises');
+const {pool,insertData} = require('./DB');
 
 const app = express();
+
+
+app.use(express.json()); //이 녀석은 요청을 json으로 변환해주는 역할을 함.
 
 //app이 요청이 왔을때 응답을 해주는 함수
 const server = http.createServer(app);
@@ -34,6 +38,18 @@ app.get("/thumb", async (req,res) =>{
     let filePath = path.join(__dirname, "thumbnails", filename);
 
     res.sendFile(filePath);
+});
+
+app.post("/postdata",async (req,res) => {
+    let {name, msg, score} = req.body;
+    let {affectedRows} = insertData(name,msg,score);
+    console.log(affectedRows);
+    if(affectedRows == 1) {
+        res.json({msg:"기록완료"});
+    }
+    else {
+        res.json({msg:"기록실패"});
+    }
 });
 
 server.listen(54000, () => {
