@@ -46,6 +46,7 @@ public class PostData : MonoBehaviour
         {
             Debug.LogError("데이터 통신중 오류 발생");
         }
+
     }
 }
     

@@ -11,7 +11,7 @@ async function insertData(name, msg, score) {
 
     console.log(result[0]);
 
-    return result[0];
+    return result[0].affectedRows == 1;
 }
 
 module.exports = {
