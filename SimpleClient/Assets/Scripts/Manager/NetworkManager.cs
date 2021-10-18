@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -12,9 +13,13 @@ public class NetworkManager : MonoBehaviour
 
     private string token = "";
 
+    public Button logoutBtn;
+
     public void SetToken(string token)
     {
         this.token = token;
+        PlayerPrefs.SetString("token", token);
+        UIManager.instance.ShowBox2();
     }
     
 
@@ -26,7 +31,25 @@ public class NetworkManager : MonoBehaviour
         }
         instance = this;
 
-        token = PlayerPrefs.GetString("token"); //없으면 null
+        token = PlayerPrefs.GetString("token", ""); //없으면 null
+    }
+    private void Start()
+    {
+        if(!token.Equals(""))
+        {
+            UIManager.instance.ShowBox2();
+        }
+        logoutBtn.onClick.AddListener(() => 
+        {
+            Logout();
+        });
+    }
+
+    public void Logout()
+    {
+        token = null;
+        PlayerPrefs.DeleteKey("token");
+        UIManager.instance.ShowBox1();
     }
 
     public void SendGetRequest(string url, string queryString, Action<string> callBack) 
@@ -59,6 +82,7 @@ public class NetworkManager : MonoBehaviour
     {
         UnityWebRequest req = UnityWebRequest.Post(url, payload);
         req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Authorization", "Bearer " + token);
 
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(payload);
         req.uploadHandler = new UploadHandlerRaw(jsonToSend);

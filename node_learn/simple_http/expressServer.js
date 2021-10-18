@@ -5,15 +5,44 @@ const fs = require('fs/promises');
 const {pool,insertData} = require('./DB');
 const jwt = require('jsonwebtoken');
 
-const key = require('./secretKey');;
+const key = require('./secretKey');const e = require('express');
+;
 
 const app = express();
 
 
 app.use(express.json()); //이 녀석은 요청을 json으로 변환해주는 역할을 함.
 
+app.use((req,res,next) => {
+    let auth = req.headers["authorization"];
+    if(auth === undefined) {
+        req.loginUser = null;
+        next();
+        return;
+    }
+    auth = auth.split(" ");
+    let token = auth[1];
+
+    if(token !== undefined) {
+        const decode = jwt.verify(token,key); //해당 토큰이 해당키로 암호화 되었는지 체크
+        if(decode) {
+            req.loginUser = decode;
+        }
+        else {
+            res.json({result:false, payload:"변형된 토큰이 감지됨"});
+            return;
+        }
+    }
+    else {
+        req.loginUser = null;
+    }
+    next();
+});
+
 //app이 요청이 왔을때 응답을 해주는 함수
 const server = http.createServer(app);
+
+
 
 app.get("/", (req,res) => {
     res.json({msg:"메인페이지입니다."});
@@ -44,36 +73,46 @@ app.get("/thumb", async (req,res) =>{
 });
 
 app.post("/postdata",async (req,res) => {
-    let {name, msg, score} = req.body;
-    let result = await insertData(name,msg,score);
+    if(req.loginUser != null) {
+        let {name, msg, score} = req.body;
 
-    if(result) {
-        res.json({msg:"기록완료"});
+        //로그인 된 유저의 기록이 존재하는지 먼저 검사하고
+        //존재하면 insertData가 아니라 Update로 score만 갱신 . 단 이때 기존 데이터보다 score가 클 경우에만 갱신
+
+        let sql = `SELECT * FROM \`high_scores\` WHERE user = ? AND score > ?`
+        let [result] = await pool.query(sql,[name,score]);
+        console.log(result);
+        if(result.length > 0) {
+            //있는거임
+            sql = `UPDATE high_scores SET score = ? WHERE user = ? AND score > ?`;
+            await pool.query(sql,[score,name]);
+            console.log("a");
+            //res.json({result:true,payload:"성공적으로 업데이트 되었습니다"});
+        }
+        else {
+            let re = await insertData(name,msg,score, req.loginUser.id);
+            if(re) {
+                res.json({msg:"기록완료"});
+            }
+            else {
+                res.json({msg:"기록중 오류 발생"});
+            }
+        }
+
+        //UPDATE high_scores SET score = ? WHERE user = ?
+        
     }
     else {
-        res.json({msg:"기록중 오류 발생"});
+        res.json({result:false,payload:"기록갱신은 로그인된 유저만 가능합니다"})
     }
 });
 app.get("/list", async (req,res) => {
-    let auth = req.header["Authorization"];
-    if(auth === undefined) {
-        res.json({result:false, payload:"로그인하세요"});
-        return;
-    }
-    auth = auth.split(" ");
-    let token = auth[1];
-
-    if(token === undefined) {
-        res.json({result:false, payload:"잘못된 토큰입니다"});
-        return;
-    }
-
-    const decode = jwt.verify(token,key); //해당 토큰이 해당키로 암호화 되었는지 체크
-    if(decode) {
+    
+    if(req.loginUser != null) {
         let sql = `SELECT * FROM high_scores ORDER BY score DESC LIMIT 0, 10`;
         let [list] = await pool.query(sql);
     
-        res.json({result:true, payload:{list, count:list.length}});
+        res.json({result:true, payload: JSON.stringify({list, count:list.length})});
     }
     else {
         res.json({result:false, payload:"잘못된 토큰입니다"});
@@ -111,7 +150,7 @@ app.post("/login", async (req,res) => {
             expiresIn:'30 days'
         });
         //console.log(token);
-        res.json({result:true,paylaod:token});
+        res.json({result:true,payload:token});
     }
     else {
         //회원이 존재하지 않는다면
