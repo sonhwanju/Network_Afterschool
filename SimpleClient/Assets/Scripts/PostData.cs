@@ -22,6 +22,7 @@ public class PostData : MonoBehaviour
 
             //만약 로그인 되어있지 않다면 경고창 띄우고 전송안함 
             RecordVO vo = new RecordVO(txtName.text, txtMsg.text, txtScore.text);
+            print(txtScore.text);
             string json = JsonUtility.ToJson(vo);
             NetworkManager.instance.SendPostRequest("postdata", json, res =>
              {
@@ -29,7 +30,7 @@ public class PostData : MonoBehaviour
                  ResponseVO vo = JsonUtility.FromJson<ResponseVO>(res);
                  if (vo.result)
                  {
-
+                     print(vo.payload);
                  }
                  else
                  {

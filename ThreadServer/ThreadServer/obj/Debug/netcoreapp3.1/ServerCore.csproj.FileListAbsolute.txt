@@ -1,0 +1,13 @@
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.exe
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.json
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.dev.json
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.dll
+F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.pdb
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.csproj.AssemblyReference.cache
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.dll
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.pdb
+F:\AfterScool_Network\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.genruntimeconfig.cache

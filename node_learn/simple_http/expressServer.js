@@ -76,31 +76,34 @@ app.post("/postdata",async (req,res) => {
     if(req.loginUser != null) {
         let {name, msg, score} = req.body;
 
+        let userId = req.loginUser.id;
         //로그인 된 유저의 기록이 존재하는지 먼저 검사하고
         //존재하면 insertData가 아니라 Update로 score만 갱신 . 단 이때 기존 데이터보다 score가 클 경우에만 갱신
 
-        let sql = `SELECT * FROM \`high_scores\` WHERE user = ? AND score > ?`
-        let [result] = await pool.query(sql,[name,score]);
-        console.log(result);
+        let sql = `SELECT * FROM \`high_scores\` WHERE user = ?`;
+        let [result] = await pool.query(sql,[userId]);
         if(result.length > 0) {
             //있는거임
-            sql = `UPDATE high_scores SET score = ? WHERE user = ? AND score > ?`;
-            await pool.query(sql,[score,name]);
-            console.log("a");
-            //res.json({result:true,payload:"성공적으로 업데이트 되었습니다"});
+            if(result[0].score < score) {
+                console.log("a");
+                sql = `UPDATE high_scores SET score = ?,msg = ? WHERE user = ?`;
+                await pool.query(sql,[score,msg,userId]);
+                res.json({result:true,payload:"성공적으로 업데이트 되었습니다"});
+                
+            }
+            else {
+                res.json({result:false, payload:"기록이 낮아 갱신하지 않습니다"});
+            }
         }
         else {
             let re = await insertData(name,msg,score, req.loginUser.id);
             if(re) {
-                res.json({msg:"기록완료"});
+                res.json({result:true, payload:"기록완료"});
             }
             else {
-                res.json({msg:"기록중 오류 발생"});
+                res.json({result:false, payload:"기록실패"});
             }
         }
-
-        //UPDATE high_scores SET score = ? WHERE user = ?
-        
     }
     else {
         res.json({result:false,payload:"기록갱신은 로그인된 유저만 가능합니다"})
