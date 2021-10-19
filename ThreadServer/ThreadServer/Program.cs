@@ -59,14 +59,17 @@ namespace ServerCore
         {
             for (int i = 0; i < 100000; i++)
             {
-                num--;
+                //num--;
+                Interlocked.Increment(ref num);
+                //인터락 연산은 아토믹 실행을 반드시 보장해준다
             }
         }
         static void Thread_2()
         {
             for (int i = 0; i < 100000; i++)
             {
-                num++;
+                //num++;
+                Interlocked.Decrement(ref num);
             }
         }
         static void Main(string[] args)
