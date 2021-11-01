@@ -1,0 +1,13 @@
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.exe
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.deps.json
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.runtimeconfig.json
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.runtimeconfig.dev.json
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.dll
+F:\AfterScool_Network\ThreadServer\DummyClient\bin\Debug\netcoreapp3.1\DummyClient.pdb
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.csproj.AssemblyReference.cache
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.AssemblyInfoInputs.cache
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.AssemblyInfo.cs
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.csproj.CoreCompileInputs.cache
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.dll
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.pdb
+F:\AfterScool_Network\ThreadServer\DummyClient\obj\Debug\netcoreapp3.1\DummyClient.genruntimeconfig.cache

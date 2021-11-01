@@ -5,8 +5,7 @@ const fs = require('fs/promises');
 const {pool,insertData} = require('./DB');
 const jwt = require('jsonwebtoken');
 
-const key = require('./secretKey');const e = require('express');
-;
+const key = require('./secretKey');
 
 const app = express();
 
