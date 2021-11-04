@@ -6,19 +6,19 @@ using System.Text;
 
 namespace ServerCore
 {
-    class Listener
+    public class Listener
     {
         Socket _listenSocket;
-        Action<Socket> _onAcceptHandler;
+        Func<Session> _sessionFactory; //세션을 생성하는 메서드를 넘겨주는것
 
 
-        public void Init(EndPoint endPoint,Action<Socket> onAcceptHandler)
+        public void Init(EndPoint endPoint, Func<Session> sessionFactory)
         {
             _listenSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _listenSocket.Bind(endPoint);
             _listenSocket.Listen(10);
 
-            _onAcceptHandler = onAcceptHandler;
+            _sessionFactory = sessionFactory;
 
             SocketAsyncEventArgs args = new SocketAsyncEventArgs(); //비동기 이벤트를 관리해주는 녀석
             args.Completed += OnAcceptCompleted;
@@ -47,7 +47,11 @@ namespace ServerCore
             if(args.SocketError == SocketError.Success)
             {
                 //에러 없이 처리된 경우
-                _onAcceptHandler(args.AcceptSocket);
+                //_onAcceptHandler(args.AcceptSocket);
+                Session session = _sessionFactory();
+                session.Init(args.AcceptSocket);
+
+                session.OnConnected(args.RemoteEndPoint);
             }
             else
             {
