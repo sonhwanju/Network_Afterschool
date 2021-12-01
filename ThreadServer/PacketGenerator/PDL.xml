@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PDL>
+	<!-- 클라이언트에서 서버로 보내는 패킷-->
+	<packet name="ChatMSG" usage="client">
+		<string name="chat"/>
+	</packet>
+	<!-- 서버에서 클라로 보내는 패킷-->
+	<packet name="ChatBroad" usage="server">
+		<int name="playerId"/>
+		<string name="chat"/>
+	</packet>
+</PDL>

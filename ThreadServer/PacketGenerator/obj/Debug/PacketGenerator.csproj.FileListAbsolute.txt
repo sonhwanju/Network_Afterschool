@@ -1,0 +1,13 @@
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.exe
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.deps.json
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.runtimeconfig.json
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.runtimeconfig.dev.json
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.dll
+F:\AfterScool_Network\ThreadServer\PacketGenerator\bin\PacketGenerator.pdb
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfoInputs.cache
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfo.cs
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.csproj.CoreCompileInputs.cache
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.dll
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.pdb
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.genruntimeconfig.cache
+F:\AfterScool_Network\ThreadServer\PacketGenerator\obj\Debug\PacketGenerator.csproj.AssemblyReference.cache
