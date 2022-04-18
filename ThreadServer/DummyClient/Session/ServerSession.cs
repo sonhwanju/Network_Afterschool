@@ -10,10 +10,7 @@ namespace DummyClient
     {
         public override void OnConnected(EndPoint endPoint)
         {
-            //여기까지 코드가 도착하면 연결이 된것
             Console.WriteLine($"Connected to {endPoint}");
-
-
         }
 
         public override void OnDisconnected(EndPoint endPoint)
@@ -23,10 +20,6 @@ namespace DummyClient
 
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
-            //ushort size = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
-            //ushort id = BitConverter.ToUInt16(buffer.Array, buffer.Offset + 2);
-
-            //Console.WriteLine($"RECV ID : {id}, Size : {size}");
             PacketManager.Instance.OnRecvPacket(this, buffer);
         }
 

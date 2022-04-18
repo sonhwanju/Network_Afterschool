@@ -9,9 +9,9 @@ namespace Server
     {
         List<ClientSession> _sessions = new List<ClientSession>();
 
-        object _lock = new object();
-
         JobQueue _jobQueue = new JobQueue();
+
+        List<ArraySegment<byte>> _pendingList = new List<ArraySegment<byte>>();
 
         public void Push(Action job)
         {
@@ -20,40 +20,67 @@ namespace Server
 
         public void Enter(ClientSession session)
         {
-            lock(_lock)
+            _sessions.Add(session);
+            session.Room = this;
+
+            PlayerList list = new PlayerList();
+            _sessions.ForEach(s =>
             {
-                if (!_sessions.Contains(session))
+                list.players.Add(new PlayerList.Player()
                 {
-                    _sessions.Add(session);
-                    session.Room = this;
-                }
-            }
-            
+                    isSelf = (s.sessionId == session.sessionId),
+                    playerId = s.sessionId,
+                    posX = s.posX,
+                    posY = s.posY,
+                    posZ = s.posZ
+                });
+            });
+            session.Send(list.Write());
+
+            BroadcastEnterGame enter = new BroadcastEnterGame();
+            enter.playerId = session.sessionId;
+            enter.posX = 0;
+            enter.posY = 0;
+            enter.posZ = 0;
+
+            BroadCast(enter.Write());
         }
+
         public void Leave(ClientSession session)
         {
-            lock (_lock)
-            {
-                if (_sessions.Contains(session))
-                {
-                    _sessions.Remove(session);
-                }
-            }
+            _sessions.Remove(session);
+
+            BroadcastLeaveGame leave = new BroadcastLeaveGame();
+            leave.playerId = session.sessionId;
+            BroadCast(leave.Write());
         }
-        public void BroadCast(ClientSession session, string chat)
+
+        public void BroadCast(ArraySegment<byte> segment)
         {
-            ChatBroad chatBroad = new ChatBroad();
-            chatBroad.playerId = session.sessionId;
-            chatBroad.chat = chat;
-
-            ArraySegment<byte> segment = chatBroad.Write();
-
-            lock(_lock)
-            {
-                _sessions.ForEach(x => x.Send(segment));
-            }
+            _pendingList.Add(segment);
         }
 
-        
+        public void Flush()
+        {
+            _sessions.ForEach(x => x.Send(_pendingList));
+            _pendingList.Clear();
+        }
+
+        public void Move(ClientSession session, Move packet)
+        {
+            session.posX = packet.posX;
+            session.posY = packet.posY;
+            session.posZ = packet.posZ;
+
+            BroadcastMove bMove = new BroadcastMove()
+            {
+                playerId = session.sessionId,
+                posX = session.posX,
+                posY = session.posY,
+                posZ = session.posZ,
+            };
+
+            BroadCast(bMove.Write());
+        }
     }
 }

@@ -1,3 +1,12 @@
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\USER-001\source\repos\ThreadServer\ThreadServer\obj\Debug\netcoreapp3.1\ServerCore.csprojAssemblyReference.cache
 F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.deps.json
 F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.dll
 F:\AfterScool_Network\ThreadServer\ThreadServer\bin\Debug\netcoreapp3.1\ServerCore.pdb

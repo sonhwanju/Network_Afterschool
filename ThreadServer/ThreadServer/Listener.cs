@@ -9,20 +9,23 @@ namespace ServerCore
     public class Listener
     {
         Socket _listenSocket;
-        Func<Session> _sessionFactory; //세션을 생성하는 메서드를 넘겨주는것
+        Func<Session> _sessionFactory; //새션을 생성하는 매서드를 넘겨주는거야
 
-
-        public void Init(EndPoint endPoint, Func<Session> sessionFactory)
+        public void Init(EndPoint endPoint, Func<Session> sessionFactory, int register = 1, int backLog = 100)
         {
             _listenSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _listenSocket.Bind(endPoint);
-            _listenSocket.Listen(2000);
+            _listenSocket.Listen(backLog);
 
             _sessionFactory = sessionFactory;
 
-            SocketAsyncEventArgs args = new SocketAsyncEventArgs(); //비동기 이벤트를 관리해주는 녀석
-            args.Completed += OnAcceptCompleted;
-            RegisterAccept(args); //한번 등록
+            for(int i = 0; i < register; i++)
+            {
+                SocketAsyncEventArgs args = new SocketAsyncEventArgs(); //비동기 이벤트를 관리해주는 녀석
+                args.Completed += OnAcceptCompleted;
+
+                RegisterAccept(args); //한번 등록
+            }
         }
 
         private void RegisterAccept(SocketAsyncEventArgs args)
@@ -31,23 +34,19 @@ namespace ServerCore
 
             bool pending = _listenSocket.AcceptAsync(args);
 
-            if(!pending)
+            if (!pending)
             {
-                //pending은 대기가 걸렸는가 pending이 false라는 
-                //어셉트가 완성되었을 때 작업을 해줘야 함
+                //pending 은 대기가 걸렸는가. pending 이 false라는
                 OnAcceptCompleted(null, args);
             }
-            else
-            {
-                
-            }
+
         }
+
         private void OnAcceptCompleted(object sender, SocketAsyncEventArgs args)
         {
-            if(args.SocketError == SocketError.Success)
+            if (args.SocketError == SocketError.Success)
             {
                 //에러 없이 처리된 경우
-                //_onAcceptHandler(args.AcceptSocket);
                 Session session = _sessionFactory();
                 session.Init(args.AcceptSocket);
 
@@ -57,13 +56,9 @@ namespace ServerCore
             {
                 Console.WriteLine(args.SocketError.ToString());
             }
+
             RegisterAccept(args);
         }
-        //public Socket Accept()
-        //{
-        //    return _listenSocket.Accept();
-        //}
-        
 
     }
 }

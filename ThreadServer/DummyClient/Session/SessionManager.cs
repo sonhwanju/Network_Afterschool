@@ -7,17 +7,12 @@ namespace DummyClient
     class SessionManager
     {
         static SessionManager _instance = new SessionManager();
-        public static SessionManager Instancce
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static SessionManager Instance { get { return _instance;  } }
 
         List<ServerSession> _sessions = new List<ServerSession>();
 
         object _lock = new object();
+        Random _rand = new Random();
 
         public ServerSession Generate()
         {
@@ -33,16 +28,15 @@ namespace DummyClient
         {
             lock(_lock)
             {
-                Console.WriteLine(msg);
                 _sessions.ForEach(x =>
                 {
-                    ChatMSG packet = new ChatMSG();
-                    packet.chat = msg;
+                    Move movePacket = new Move();
+                    movePacket.posX = _rand.Next(-50, 50);
+                    movePacket.posY = 0;
+                    movePacket.posZ = _rand.Next(-50, 50);
 
-                    ArraySegment<byte> segment = packet.Write();
-
-                    x.Send(segment);
-                }); 
+                    x.Send(movePacket.Write());
+                });
             }
         }
     }
